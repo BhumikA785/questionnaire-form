@@ -1,0 +1,151 @@
+/* General container styling */
+.form-container {
+    max-width: 700px;
+    margin: 40px auto;
+    padding: 30px;
+    background: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    font-family: 'Arial', sans-serif;
+    color: #333;
+}
+
+/* Heading styling */
+h2 {
+    text-align: center;
+    font-size: 28px;
+    color: #007bff;
+    margin-bottom: 20px;
+}
+
+/* JSON input styling */
+.json-input {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.json-input textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 16px;
+    color: #555;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+}
+
+.json-input button {
+    background-color: #007bff;
+    color: white;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.json-input button:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
+}
+
+/* Form group styling */
+.form-group {
+    margin-bottom: 20px;
+}
+
+/* Label styling */
+.form-group label {
+    display: block;
+    font-size: 18px;
+    color: #333;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+/* Options container styling */
+.option-container {
+    margin-bottom: 10px;
+}
+
+/* Option input and label styling */
+input[type="checkbox"], input[type="radio"] {
+    margin-right: 10px;
+}
+
+label {
+    display: block;
+    font-size: 16px;
+    color: #555;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+label:hover {
+    color: #007bff;
+}
+
+/* Button styling */
+button[type="submit"] {
+    width: 100%;
+    padding: 12px;
+    font-size: 18px;
+    color: #ffffff;
+    background: #007bff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
+    margin-top: 20px;
+}
+
+button[type="submit"]:hover {
+    background-color: #0056b3;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+button[type="submit"]:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.5);
+}
+
+/* Response message styling */
+.response-message {
+    margin-top: 20px;
+    padding: 15px;
+    border-radius: 8px;
+    font-size: 16px;
+}
+
+.response-message.success {
+    background: #d4edda;
+    color: #155724;
+}
+
+.response-message.error {
+    background: #f8d7da;
+    color: #721c24;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 600px) {
+    .form-container {
+        padding: 20px;
+    }
+
+    h2 {
+        font-size: 24px;
+    }
+
+    .json-input textarea {
+        font-size: 14px;
+    }
+
+    .json-input button {
+        font-size: 16px;
+    }
+}

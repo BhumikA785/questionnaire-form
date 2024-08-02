@@ -1,0 +1,34 @@
+[
+  {
+    "questionId": "q1",
+    "question": {
+      "title": "Which of the following are programming languages?",
+      "note": "(Select all that apply)",
+      "type": "choices",
+      "options": ["Python", "HTML", "JavaScript", "CSS"],
+      "correctAnswer": ["Python", "JavaScript"]
+    },
+    "required": true
+  },
+  {
+    "questionId": "q2",
+    "question": {
+      "title": "Is Earth the third planet from the sun?",
+      "note": "",
+      "type": "boolean",
+      "correctAnswer": "true"
+    },
+    "required": true
+  },
+  {
+    "questionId": "q3",
+    "question": {
+      "title": "Which country is known as the Land of the Rising Sun?",
+      "note": "",
+      "type": "choice",
+      "options": ["China", "Japan", "South Korea", "Thailand"],
+      "correctAnswer": "Japan"
+    },
+    "required": true
+  }
+]
