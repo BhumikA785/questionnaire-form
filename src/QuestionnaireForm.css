@@ -1,151 +1,155 @@
 /* General container styling */
-.form-container {
-    max-width: 700px;
-    margin: 40px auto;
-    padding: 30px;
-    background: #ffffff;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    font-family: 'Arial', sans-serif;
-    color: #333;
+.questionnaire-form-container {
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 30px;
+  border-radius: 12px;
+  background: #ffffff;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e0e0e0;
 }
 
-/* Heading styling */
-h2 {
-    text-align: center;
-    font-size: 28px;
-    color: #007bff;
-    margin-bottom: 20px;
+/* Textarea styling */
+textarea {
+  width: 100%;
+  height: 120px;
+  padding: 14px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 16px;
+  line-height: 1.5;
+  margin-bottom: 30px; /* Increased spacing */
+  background: #fafafa;
+  resize: vertical;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: border-color 0.3s, box-shadow 0.3s;
+  font-family: 'Arial', sans-serif;
 }
 
-/* JSON input styling */
-.json-input {
-    text-align: center;
-    margin-bottom: 20px;
+textarea:focus {
+  border-color: #999;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  outline: none;
 }
 
-.json-input textarea {
-    width: 100%;
-    padding: 12px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    font-size: 16px;
-    color: #555;
-    margin-bottom: 10px;
-    box-sizing: border-box;
-}
-
-.json-input button {
-    background-color: #007bff;
-    color: white;
-    padding: 12px 24px;
-    border: none;
-    border-radius: 8px;
-    font-size: 18px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: background-color 0.3s, transform 0.3s;
-}
-
-.json-input button:hover {
-    background-color: #0056b3;
-    transform: scale(1.05);
-}
-
-/* Form group styling */
-.form-group {
-    margin-bottom: 20px;
-}
-
-/* Label styling */
-.form-group label {
-    display: block;
-    font-size: 18px;
-    color: #333;
-    margin-bottom: 10px;
-    font-weight: bold;
-}
-
-/* Options container styling */
-.option-container {
-    margin-bottom: 10px;
-}
-
-/* Option input and label styling */
-input[type="checkbox"], input[type="radio"] {
-    margin-right: 10px;
-}
-
-label {
-    display: block;
-    font-size: 16px;
-    color: #555;
-    cursor: pointer;
-    transition: color 0.3s ease;
-}
-
-label:hover {
-    color: #007bff;
+/* Button container styling */
+.button-container {
+  text-align: center;
+  margin-top: 30px; /* Increased spacing */
 }
 
 /* Button styling */
-button[type="submit"] {
-    width: 100%;
-    padding: 12px;
-    font-size: 18px;
-    color: #ffffff;
-    background: #007bff;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
-    margin-top: 20px;
+button {
+  background-color: #6c757d;
+  color: #ffffff;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+  margin: 5px; /* Added margin for spacing between buttons */
 }
 
-button[type="submit"]:hover {
-    background-color: #0056b3;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+button:hover {
+  background-color: #5a6268;
+  transform: translateY(-2px);
 }
 
-button[type="submit"]:focus {
-    outline: none;
-    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.5);
+button:active {
+  transform: translateY(1px);
 }
 
-/* Response message styling */
-.response-message {
-    margin-top: 20px;
-    padding: 15px;
-    border-radius: 8px;
-    font-size: 16px;
+/* Question block styling */
+.question-block {
+  margin-bottom: 35px; /* Increased spacing between question blocks */
+  padding: 20px;
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  background-color: #f9f9f9;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
 }
 
-.response-message.success {
-    background: #d4edda;
-    color: #155724;
+/* Labels and paragraphs in question blocks */
+.question-block label {
+  display: block;
+  font-weight: 600;
+  color: #333;
+  font-size: 18px;
+  margin-bottom: 10px;
+  font-family: 'Arial', sans-serif;
 }
 
-.response-message.error {
-    background: #f8d7da;
-    color: #721c24;
+.question-block p {
+  font-style: italic;
+  color: #666;
+  margin-bottom: 20px; /* Increased spacing */
 }
 
-/* Mobile responsiveness */
-@media (max-width: 600px) {
-    .form-container {
-        padding: 20px;
-    }
+/* Choices styling */
+.question-block div {
+  margin-bottom: 15px;
+}
 
-    h2 {
-        font-size: 24px;
-    }
+.question-block input[type="radio"],
+.question-block input[type="checkbox"] {
+  margin-right: 10px;
+  cursor: pointer;
+}
 
-    .json-input textarea {
-        font-size: 14px;
-    }
+.question-block input[type="radio"] + label,
+.question-block input[type="checkbox"] + label {
+  font-size: 16px;
+  color: #444;
+  padding: 8px;
+  border-radius: 4px;
+  transition: background-color 0.2s, color 0.2s;
+}
 
-    .json-input button {
-        font-size: 16px;
-    }
+.question-block input[type="radio"]:checked + label,
+.question-block input[type="checkbox"]:checked + label {
+  background-color: #e8e8e8;
+  color: #333;
+}
+
+/* Submitted answers section styling */
+.submitted-answers {
+  margin-top: 40px; /* Increased spacing above the section */
+  padding: 20px;
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  background-color: #ffffff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+}
+
+.submitted-answers h2 {
+  margin-bottom: 20px;
+  color: #333;
+  font-size: 1.8em;
+  font-weight: 600;
+  border-bottom: 3px solid #e0e0e0;
+  padding-bottom: 10px;
+  font-family: 'Arial', sans-serif;
+}
+
+.submitted-answers ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.submitted-answers li {
+  padding: 15px;
+  border-bottom: 1px solid #f0f0f0;
+  font-size: 16px;
+  color: #555;
+}
+
+.submitted-answers li:last-child {
+  border-bottom: none;
+}
+
+.submitted-answers strong {
+  color: #333;
 }

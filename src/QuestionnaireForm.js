@@ -1,190 +1,200 @@
 import React, { useState } from "react";
 import "./QuestionnaireForm.css";
 
-const sampleJSON = `
-[
-  {
-    "questionId": "q1",
-    "question": {
-      "title": "Which of the following are programming languages?",
-      "note": "(Select all that apply)",
-      "type": "choices",
-      "options": ["Python", "HTML", "JavaScript", "CSS"],
-      "correctAnswer": ["Python", "JavaScript"]
+const sampleJson = `{
+  "questions": [
+    {
+      "order": 1,
+      "questionId": "a69ff316-4949-4a84-a6cd-3124fe9eda3b",
+      "required": true,
+      "question": {
+        "title": "Question 1 - Multiple choice Type",
+        "note": "sample note",
+        "type": "choices",
+        "options": ["option 1", "option 2", "option 3", "option 4"]
+      }
     },
-    "required": true
-  },
-  {
-    "questionId": "q2",
-    "question": {
-      "title": "Is Earth the third planet from the sun?",
-      "note": "",
-      "type": "boolean",
-      "correctAnswer": "true"
+    {
+      "order": 2,
+      "questionId": "d51e1e1e-49e9-4bfb-a6cd-5151fe9eda3c",
+      "required": true,
+      "question": {
+        "title": "Question 2 - Boolean type",
+        "note": "sample note for boolean",
+        "type": "boolean"
+      }
     },
-    "required": true
-  },
-  {
-    "questionId": "q3",
-    "question": {
-      "title": "Which country is known as the Land of the Rising Sun?",
-      "note": "",
-      "type": "choice",
-      "options": ["China", "Japan", "South Korea", "Thailand"],
-      "correctAnswer": "Japan"
-    },
-    "required": true
-  }
-]
-`;
+    {
+      "order": 3,
+      "questionId": "4059e035-93b0-4dd5-bb69-8006b999dd89",
+      "required": true,
+      "question": {
+        "title": "Question 3 - Single choice ",
+        "note": "sample note",
+        "type": "choice",
+        "options": ["choice 1", "choice 2", "choice 3"]
+      }
+    }
+  ],
+  "title": "Questionnaire 1"
+}`;
 
 const QuestionnaireForm = () => {
-  const [jsonInput, setJsonInput] = useState(sampleJSON);
+  const [jsonInput, setJsonInput] = useState(sampleJson);
   const [questions, setQuestions] = useState([]);
-  const [responses, setResponses] = useState({});
-  const [submitted, setSubmitted] = useState(false);
+  const [answers, setAnswers] = useState({});
+  const [submittedAnswers, setSubmittedAnswers] = useState([]);
 
-  const handleJsonChange = (event) => {
-    setJsonInput(event.target.value);
+  const handleJsonInput = (e) => {
+    setJsonInput(e.target.value);
   };
 
-  const handleJsonSubmit = () => {
+  const loadQuestions = () => {
     try {
-      const parsedQuestions = JSON.parse(jsonInput);
-      setQuestions(parsedQuestions);
-      setSubmitted(false); // Reset the form submission state
-      setResponses({}); // Reset responses
+      const parsedJson = JSON.parse(jsonInput);
+      setQuestions(parsedJson.questions);
     } catch (error) {
-      alert("Invalid JSON input. Please provide a valid JSON array.");
+      alert("Invalid JSON format");
     }
   };
 
-  const handleChange = (event, questionId) => {
-    const { name, value, type, checked } = event.target;
-    setResponses((prevResponses) => {
-      if (type === "checkbox") {
-        const prevAnswers = prevResponses[questionId] || [];
-        if (checked) {
-          return { ...prevResponses, [questionId]: [...prevAnswers, value] };
-        } else {
-          return {
-            ...prevResponses,
-            [questionId]: prevAnswers.filter((answer) => answer !== value),
-          };
-        }
+  const handleCheckboxChange = (questionId, value) => {
+    setAnswers((prevAnswers) => {
+      const currentAnswers = prevAnswers[questionId] || [];
+      if (currentAnswers.includes(value)) {
+        return {
+          ...prevAnswers,
+          [questionId]: currentAnswers.filter((answer) => answer !== value),
+        };
       } else {
-        return { ...prevResponses, [questionId]: value };
+        return {
+          ...prevAnswers,
+          [questionId]: [...currentAnswers, value],
+        };
       }
+    });
+  };
+
+  const handleRadioChange = (questionId, value) => {
+    setAnswers({
+      ...answers,
+      [questionId]: value,
     });
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    setSubmitted(true);
+    const output = questions.map((question) => ({
+      question: question.question.title,
+      answer: answers[question.questionId] || "",
+    }));
+    setSubmittedAnswers(output);
   };
 
   const renderQuestion = (question) => {
-    switch (question.type) {
+    switch (question.question.type) {
       case "choices":
-        return question.options.map((option, index) => (
-          <div key={index} className="option-container">
-            <label>
-              <input
-                type="checkbox"
-                name={question.id}
-                value={option}
-                onChange={(e) => handleChange(e, question.id)}
-              />
-              <span>{option}</span>
-            </label>
+        return (
+          <div key={question.questionId} className="question-block">
+            <label>{question.question.title}</label>
+            <p>{question.question.note}</p>
+            {question.question.options.map((option) => (
+              <div key={option}>
+                <input
+                  type="checkbox"
+                  name={`question-${question.questionId}`}
+                  value={option}
+                  onChange={() =>
+                    handleCheckboxChange(question.questionId, option)
+                  }
+                  checked={
+                    answers[question.questionId]?.includes(option) || false
+                  }
+                />
+                <label>{option}</label>
+              </div>
+            ))}
           </div>
-        ));
-      case "boolean":
-        return ["true", "false"].map((option, index) => (
-          <div key={index} className="option-container">
-            <label>
-              <input
-                type="radio"
-                name={question.id}
-                value={option}
-                onChange={(e) => handleChange(e, question.id)}
-              />
-              <span>{option.charAt(0).toUpperCase() + option.slice(1)}</span>
-            </label>
-          </div>
-        ));
+        );
       case "choice":
-        return question.options.map((option, index) => (
-          <div key={index} className="option-container">
-            <label>
+        return (
+          <div key={question.questionId} className="question-block">
+            <label>{question.question.title}</label>
+            <p>{question.question.note}</p>
+            {question.question.options.map((option) => (
+              <div key={option}>
+                <input
+                  type="radio"
+                  name={`question-${question.questionId}`}
+                  value={option}
+                  onChange={() =>
+                    handleRadioChange(question.questionId, option)
+                  }
+                  checked={answers[question.questionId] === option}
+                />
+                <label>{option}</label>
+              </div>
+            ))}
+          </div>
+        );
+      case "boolean":
+        return (
+          <div key={question.questionId} className="question-block">
+            <label>{question.question.title}</label>
+            <p>{question.question.note}</p>
+            <div>
               <input
                 type="radio"
-                name={question.id}
-                value={option}
-                onChange={(e) => handleChange(e, question.id)}
+                name={`question-${question.questionId}`}
+                value="true"
+                onChange={() => handleRadioChange(question.questionId, "true")}
+                checked={answers[question.questionId] === "true"}
               />
-              <span>{option}</span>
-            </label>
+              <label>True</label>
+            </div>
+            <div>
+              <input
+                type="radio"
+                name={`question-${question.questionId}`}
+                value="false"
+                onChange={() => handleRadioChange(question.questionId, "false")}
+                checked={answers[question.questionId] === "false"}
+              />
+              <label>False</label>
+            </div>
           </div>
-        ));
+        );
       default:
         return null;
     }
   };
 
-  const renderResponseMessage = () => {
-    return questions.map((question) => {
-      const userAnswer = responses[question.questionId];
-      const correctAnswer = question.question.correctAnswer;
-
-      let isCorrect;
-      if (question.question.type === "choices") {
-        isCorrect =
-          Array.isArray(userAnswer) &&
-          userAnswer.length === correctAnswer.length &&
-          userAnswer.every((answer) => correctAnswer.includes(answer));
-      } else {
-        isCorrect = userAnswer === correctAnswer;
-      }
-
-      return (
-        <div
-          key={question.questionId}
-          className={`response-message ${isCorrect ? "success" : "error"}`}
-        >
-          {question.question.title}:{" "}
-          {isCorrect
-            ? "Correct"
-            : `Incorrect (Correct answer: ${correctAnswer})`}
-        </div>
-      );
-    });
-  };
-
   return (
-    <div className="form-container">
-      <h2>General Knowledge Quiz</h2>
-      <div className="json-input">
-        <textarea
-          value={jsonInput}
-          onChange={handleJsonChange}
-          rows="10"
-          placeholder="Paste your JSON array here..."
-        />
-        <button onClick={handleJsonSubmit}>Generate Form</button>
-      </div>
-      {questions.length > 0 && (
-        <form onSubmit={handleSubmit}>
-          {questions.map((question) => (
-            <div key={question.questionId} className="form-group">
-              <label>{question.question.title}</label>
-              {renderQuestion(question.question)}
-            </div>
-          ))}
-          <button type="submit">Submit</button>
-        </form>
+    <div className="questionnaire-form-container">
+      <textarea
+        value={jsonInput}
+        onChange={handleJsonInput}
+        placeholder="Enter JSON here"
+      />
+      <button onClick={loadQuestions}>Load Questions</button>
+      <form onSubmit={handleSubmit}>
+        {questions.map((question) => renderQuestion(question))}
+        <button type="submit">Submit</button>
+      </form>
+
+      {submittedAnswers.length > 0 && (
+        <div className="submitted-answers">
+          <h2>Submitted Answers:</h2>
+          <ul>
+            {submittedAnswers.map(({ question, answer }, index) => (
+              <li key={index}>
+                <strong>{question}:</strong>{" "}
+                {Array.isArray(answer) ? answer.join(", ") : answer}
+              </li>
+            ))}
+          </ul>
+        </div>
       )}
-      {submitted && renderResponseMessage()}
     </div>
   );
 };

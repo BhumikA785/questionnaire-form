@@ -30,5 +30,81 @@
       "correctAnswer": "Japan"
     },
     "required": true
+  },
+  {
+    "questionId": "q4",
+    "question": {
+      "title": "What is the capital city of Australia?",
+      "note": "",
+      "type": "choice",
+      "options": ["Sydney", "Melbourne", "Canberra", "Brisbane"],
+      "correctAnswer": "Canberra"
+    },
+    "required": true
+  },
+  {
+    "questionId": "q5",
+    "question": {
+      "title": "Which of the following are prime numbers?",
+      "note": "(Select all that apply)",
+      "type": "choices",
+      "options": ["2", "3", "4", "5", "6"],
+      "correctAnswer": ["2", "3", "5"]
+    },
+    "required": true
+  },
+  {
+    "questionId": "q6",
+    "question": {
+      "title": "What is the chemical symbol for water?",
+      "note": "",
+      "type": "choice",
+      "options": ["H2O", "O2", "CO2", "NaCl"],
+      "correctAnswer": "H2O"
+    },
+    "required": true
+  },
+  {
+    "questionId": "q7",
+    "question": {
+      "title": "Which of these authors wrote 'To Kill a Mockingbird'?",
+      "note": "",
+      "type": "choice",
+      "options": ["Harper Lee", "Mark Twain", "Ernest Hemingway", "F. Scott Fitzgerald"],
+      "correctAnswer": "Harper Lee"
+    },
+    "required": true
+  },
+  {
+    "questionId": "q8",
+    "question": {
+      "title": "What is the largest planet in our solar system?",
+      "note": "",
+      "type": "choice",
+      "options": ["Earth", "Mars", "Jupiter", "Saturn"],
+      "correctAnswer": "Jupiter"
+    },
+    "required": true
+  },
+  {
+    "questionId": "q9",
+    "question": {
+      "title": "Select the continents that are part of the Southern Hemisphere.",
+      "note": "(Select all that apply)",
+      "type": "choices",
+      "options": ["Africa", "Asia", "Australia", "Europe", "South America"],
+      "correctAnswer": ["Africa", "Australia", "South America"]
+    },
+    "required": true
+  },
+  {
+    "questionId": "q10",
+    "question": {
+      "title": "Is the following statement true or false: The Great Wall of China is visible from space.",
+      "note": "",
+      "type": "boolean",
+      "correctAnswer": "false"
+    },
+    "required": true
   }
 ]
