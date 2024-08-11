@@ -12,10 +12,10 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v3
 
-    # Step 1: Assign the PR to the author
     - name: Assign PR to Author
       uses: actions/github-script@v6
       with:
+        github-token: ${{ secrets.YOUR_PAT }}
         script: |
           const author = context.payload.pull_request.user.login;
           await github.rest.issues.addAssignees({
