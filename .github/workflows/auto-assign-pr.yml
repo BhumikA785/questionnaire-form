@@ -1,36 +1,33 @@
-name: Auto Assign PR to Author
+name: Demo to create automatic PR 
 
 on:
-  pull_request:
-    types: [opened]
+    push:
+        branches:
+            - main
 
-permissions:
-  contents: read  # Minimum required permission to check out the code
-  pull-requests: write  # Permission to modify PRs, like assigning it to the author
-  issues: write  # Permission to assign issues (PRs are a type of issue)
+jobs: 
+    updateAuthor:
+        runs-on: ubuntu-latest
+        steps:
+            - name: checking out code 
+              uses: actions/checkout@v2
+            
+            - name: extract git commit data
+              uses: rlespinasse/git-commit-data-action@v1.x
 
-jobs:
-  assign-pr:
-    runs-on: ubuntu-latest
+            - name: Set Commit Information
+              id: set-vars
+              run: |
+                   echo "GIT_COMMIT_AUTHOR_NAME=$(git log -1 --pretty=format:'%an')" >> $GITHUB_ENV
+                   echo "GIT_COMMIT_AUTHOR_EMAIL=$(git log -1 --pretty=format:'%ae')" >> $GITHUB_ENV
 
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      # Step: Assign the PR to the author
-      - name: Assign PR to Author
-        uses: actions/github-script@v6
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}  # Provide the GITHUB_TOKEN here
-          script: |
-            const author = context.payload.pull_request.user.login;
-            await github.rest.issues.addAssignees({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              issue_number: context.issue.number,
-              assignees: [author]
-            });
-      - name: Debug secrets
-        run: echo "GITHUB_TOKEN is available"
-        env:
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            - name: Create Pull Request
+              uses: peter-evans/create-pull-request@v3
+              with:
+                branch: auto-pr-branch
+                base: main
+                title: "Demo for Auto PR"
+                body: |
+                    This is to show automatic PR creation
+                token: ${{ secrets.GITHUB_TOKEN }}
+                delete-branch: true
