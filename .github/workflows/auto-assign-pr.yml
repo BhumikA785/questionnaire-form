@@ -12,14 +12,13 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v3
 
-    # Step 1: Get the PR author and assign the PR
+    # Step 1: Assign the PR to the author
     - name: Assign PR to Author
       uses: actions/github-script@v6
       with:
         script: |
-          const octokit = github.getOctokit(process.env.GITHUB_TOKEN);
           const author = context.payload.pull_request.user.login;
-          await octokit.rest.issues.addAssignees({
+          await github.rest.issues.addAssignees({
             owner: context.repo.owner,
             repo: context.repo.repo,
             issue_number: context.issue.number,
