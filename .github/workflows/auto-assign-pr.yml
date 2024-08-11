@@ -1,26 +1,19 @@
-name: Auto Assign PR to Author
+name: Auto Assign Author
 
 on:
-  pull_request:
+  issues:
     types: [opened]
+  pull_request:
+    types: [opened, synchronize, reopened]
 
 jobs:
-  assign-pr:
+  assign:
     runs-on: ubuntu-latest
-
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
-
-    # Step 1: Get the PR author and assign the PR
-    - name: Assign PR to Author
-      uses: actions/github-script@v6
-      with:
-        script: |
-          const author = context.payload.pull_request.user.login;
-          github.issues.addAssignees({
-            owner: context.repo.owner,
-            repo: context.repo.repo,
-            issue_number: context.issue.number,
-            assignees: [author]
-          });
+      - name: Checkout code
+        uses: actions/checkout@v3
+        
+      - name: Auto assign author
+        uses: toshimaru/auto-author-assign@v2.1.1
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
