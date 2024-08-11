@@ -1,38 +1,26 @@
-name: Auto Assign and Create PR
+name: Auto Assign PR to Author
 
 on:
   pull_request:
     types: [opened]
 
 jobs:
-  assign-and-create-pr:
+  assign-pr:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+    - name: Checkout code
+      uses: actions/checkout@v3
 
-      - name: Assign PR to Author
-        uses: actions/github-script@v6
-        with:
-          github-token: 
-                         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
-          script: |
-            const author = context.payload.pull_request.user.login;
-            await github.rest.issues.addAssignees({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              issue_number: context.issue.number,
-              assignees: [author]
-            });
-
-      - name: Create Pull Request
-        uses: peter-evans/create-pull-request@v3
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          branch: auto-pr-branch
-          base: main
-          title: "Demo for Auto PR"
-          body: |
-            This is an automatically created PR.
-          delete-branch: true
+    - name: Assign PR to Author
+      uses: actions/github-script@v6
+      with:
+        github-token: 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
+        script: |
+          const author = context.payload.pull_request.user.login;
+          await github.rest.issues.addAssignees({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            issue_number: context.issue.number,
+            assignees: [author]
+          });
