@@ -4,23 +4,28 @@ on:
   pull_request:
     types: [opened]
 
+permissions:
+  contents: read  # Minimum required permission to check out the code
+  pull-requests: write  # Permission to modify PRs, like assigning it to the author
+  issues: write  # Permission to assign issues (PRs are a type of issue)
+
 jobs:
   assign-pr:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-    - name: Assign PR to Author
-      uses: actions/github-script@v6
-      with:
-        github-token: ${{ secrets.YOUR_PAT }}
-        script: |
-          const author = context.payload.pull_request.user.login;
-          await github.rest.issues.addAssignees({
-            owner: context.repo.owner,
-            repo: context.repo.repo,
-            issue_number: context.issue.number,
-            assignees: [author]
-          });
+      # Step: Assign the PR to the author
+      - name: Assign PR to Author
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const author = context.payload.pull_request.user.login;
+            await github.rest.issues.addAssignees({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              assignees: [author]
+            });
