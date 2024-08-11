@@ -15,7 +15,7 @@ jobs:
     - name: Assign PR to Author
       uses: actions/github-script@v6
       with:
-        github-token: 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
+        github-token: ${{ secrets.GITHUB_TOKEN }}
         script: |
           const author = context.payload.pull_request.user.login;
           await github.rest.issues.addAssignees({
