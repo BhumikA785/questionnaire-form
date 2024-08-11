@@ -30,3 +30,7 @@ jobs:
               issue_number: context.issue.number,
               assignees: [author]
             });
+      - name: Debug secrets
+        run: echo "GITHUB_TOKEN is available"
+        env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
